@@ -22,10 +22,8 @@ void setup() {
   driver.start();
 
   driver.setSpeed(127);
-  // pinMode(11, OUTPUT);
 }
 
 void loop() {
   driver.commutate();
-  // analogWrite(11, 127);
 }

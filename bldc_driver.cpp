@@ -15,6 +15,7 @@ Phase::Phase(uint8_t hin, uint8_t sd, uint8_t cur)
 }
 
 void Phase::setPWM(uint16_t duty) {
+    enableOutput();
     pwmDuty = duty;
     analogWrite(hinPin, duty);
 }
@@ -77,7 +78,7 @@ void BLDCDriver::initPWM() {
     // Configure PWM frequency and resolution
     // This will depend on your specific microcontroller
     // Example for Arduino:
-    // TCCR1B = TCCR1B & B11111000 | B00000001; // Set PWM frequency to 31372.55 Hz
+    TCCR1B = TCCR1B & B11111000 | B00000001; // Set PWM frequency to 31372.55 Hz
 }
 
 void BLDCDriver::setSpeed(uint16_t speed) {
@@ -130,10 +131,6 @@ void BLDCDriver::commutate() {
     // Advance to next commutation step
     currentStep = static_cast<CommutationStep>((static_cast<int>(currentStep) + 1) % 6);
     updateCommutation();
-    // phaseA.setPWM(motorSpeed);
-    // phaseB.setPWM(0);
-    // phaseC.disableOutput();
-    // analogWrite(11, 127);
 }
 
 void BLDCDriver::updateCommutation() {
